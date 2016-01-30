@@ -13,10 +13,10 @@ It uses fibers to model the asynchronous IO. They are cheap to create since it i
 
 ## Strongly typed RPC
 
-The main focus for the alpha is to support a strongly typed RPC system to take advantage of Rust's efficient pattern matching to send recursive ADTs.
+The main focus for the alpha is to support a strongly typed RPC system influenced by [Yaron Minsky](https://blogs.janestreet.com/typing-rpcs/) of Jane Street. It takes advantage of Rust's efficient pattern matching to send recursive ADTs safely. It facilitates to send complex data structures (like a AST, graph, etc) efficiently and safely.
 
 ```rust
-// request enumeration to represent an messages for a file service
+// request enumeration to represent an request message for a file service
 enum Req {
   ListAll,
   Size(Path),
@@ -25,7 +25,9 @@ enum Req {
   Del(Path),
 }
 
+// reply enumeration to represent a reply message
 enum Rep {
+  Ok,
   List(Vec<File>),
   Content(String),
   Size(usize),
@@ -33,3 +35,5 @@ enum Rep {
   Error(String),
 }
 ```
+
+Here's an example of the strongly-typed messages for a basic File Service.
